@@ -1,0 +1,204 @@
+{
+"DesignRules": [
+{
+"Layers": "Outer",
+"MinLineWidth": 0.127,
+"PadToPad": 0.1,
+"PadToTrack": 0.1,
+"RegionToRegion": 0.127,
+"TrackToRegion": 0.127,
+"TrackToTrack": 0.1
+},
+{
+"Layers": "Inner",
+"MinLineWidth": 0.127,
+"PadToPad": 0.0,
+"PadToTrack": 0.0,
+"RegionToRegion": 0.15,
+"TrackToRegion": 0.15,
+"TrackToTrack": 0.1
+}
+],
+"FilesAttributes": [
+{
+"FileFunction": "Copper,L1,Top",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-F_Cu.gbr"
+},
+{
+"FileFunction": "Copper,L2,Inr",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-In1_Cu.gbr"
+},
+{
+"FileFunction": "Copper,L3,Inr",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-In2_Cu.gbr"
+},
+{
+"FileFunction": "Copper,L4,Inr",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-In3_Cu.gbr"
+},
+{
+"FileFunction": "Copper,L5,Inr",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-In4_Cu.gbr"
+},
+{
+"FileFunction": "Copper,L6,Bot",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-B_Cu.gbr"
+},
+{
+"FileFunction": "SolderPaste,Top",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-F_Paste.gbr"
+},
+{
+"FileFunction": "SolderPaste,Bot",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-B_Paste.gbr"
+},
+{
+"FileFunction": "Legend,Top",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-F_Silkscreen.gbr"
+},
+{
+"FileFunction": "Legend,Bot",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-B_Silkscreen.gbr"
+},
+{
+"FileFunction": "SolderMask,Top",
+"FilePolarity": "Negative",
+"Path": "IMUArray_SensorBoard-F_Mask.gbr"
+},
+{
+"FileFunction": "SolderMask,Bot",
+"FilePolarity": "Negative",
+"Path": "IMUArray_SensorBoard-B_Mask.gbr"
+},
+{
+"FileFunction": "Profile",
+"FilePolarity": "Positive",
+"Path": "IMUArray_SensorBoard-Edge_Cuts.gbr"
+}
+],
+"GeneralSpecs": {
+"BoardThickness": 1.1586,
+"Finish": "None",
+"LayerNumber": 6,
+"ProjectId": {
+"GUID": "41636341-7272-4617-995f-51464e2e6b69",
+"Name": "AccArray_QFN",
+"Revision": "rev?"
+},
+"Size": {
+"X": 36.1,
+"Y": 36.1
+}
+},
+"Header": {
+"CreationDate": "2024-07-14T21:03:07-07:00",
+"GenerationSoftware": {
+"Application": "Pcbnew",
+"Vendor": "KiCad",
+"Version": "(6.0.9)"
+}
+},
+"MaterialStackup": [
+{
+"Name": "Top Silk Screen",
+"Type": "Legend"
+},
+{
+"Name": "Top Solder Paste",
+"Type": "SolderPaste"
+},
+{
+"Name": "Top Solder Mask",
+"Thickness": 0.01,
+"Type": "SolderMask"
+},
+{
+"Name": "F.Cu",
+"Thickness": 0.035,
+"Type": "Copper"
+},
+{
+"Material": "FR4",
+"Name": "F.Cu/In1.Cu",
+"Notes": "Type: dielectric layer 1 (from F.Cu to In1.Cu)",
+"Thickness": 0.1857,
+"Type": "Dielectric"
+},
+{
+"Name": "In1.Cu",
+"Thickness": 0.035,
+"Type": "Copper"
+},
+{
+"Material": "FR4",
+"Name": "In1.Cu/In2.Cu",
+"Notes": "Type: dielectric layer 2 (from In1.Cu to In2.Cu)",
+"Thickness": 0.1857,
+"Type": "Dielectric"
+},
+{
+"Name": "In2.Cu",
+"Thickness": 0.035,
+"Type": "Copper"
+},
+{
+"Material": "FR4",
+"Name": "In2.Cu/In3.Cu",
+"Notes": "Type: dielectric layer 3 (from In2.Cu to In3.Cu)",
+"Thickness": 0.1857,
+"Type": "Dielectric"
+},
+{
+"Name": "In3.Cu",
+"Thickness": 0.035,
+"Type": "Copper"
+},
+{
+"Material": "FR4",
+"Name": "In3.Cu/In4.Cu",
+"Notes": "Type: dielectric layer 4 (from In3.Cu to In4.Cu)",
+"Thickness": 0.1857,
+"Type": "Dielectric"
+},
+{
+"Name": "In4.Cu",
+"Thickness": 0.035,
+"Type": "Copper"
+},
+{
+"Material": "FR4",
+"Name": "In4.Cu/B.Cu",
+"Notes": "Type: dielectric layer 5 (from In4.Cu to B.Cu)",
+"Thickness": 0.1857,
+"Type": "Dielectric"
+},
+{
+"Name": "B.Cu",
+"Thickness": 0.035,
+"Type": "Copper"
+},
+{
+"Name": "Bottom Solder Mask",
+"Thickness": 0.01,
+"Type": "SolderMask"
+},
+{
+"Name": "Bottom Solder Paste",
+"Type": "SolderPaste"
+},
+{
+"Name": "Bottom Silk Screen",
+"Type": "Legend"
+}
+]
+}
