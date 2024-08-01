@@ -1,7 +1,7 @@
 import time
 import ustruct
 import usys
-
+from machine import Pin, SPI, PWM
 ICM42688_DEVICE_CONFIG          =const(0x11)
 ICM42688_DRIVE_CONFIG           =const(0x13)
 ICM42688_SIGNAL_PATH_RESET      =const(0x4B)
@@ -130,15 +130,19 @@ FPGA_READ = const(0x55)
 class IMU:
     def __init__(self, spi, cs, fpgacs, rate):
         self._spi = spi
-        self._cs_h = cs.on
+        
+        #Cache the functions directly to Speed up MicroPython
+        self._cs_h = cs.on 
         self._cs_l = cs.off
-
         self._fpgacs_h = fpgacs.on
         self._fpgacs_l = fpgacs.off
+        #Preallocate to Speed up MicroPython
         self.result = bytearray(512)
         self.result_short = bytearray(16)
+        
+        #Soft Reset
         self.write_reg(ICM42688_REG_BANK_SEL,[0x00])
-        self.write_reg(0x11,[0x01])
+        self.write_reg(ICM42688_DEVICE_CONFIG,[0x01])
         time.sleep(0.1)
         
         if rate == 1:
@@ -151,21 +155,16 @@ class IMU:
             self.write_reg(ICM42688_GYRO_CONFIG0,[0xE9]) # 15.625dps + 50Hz
             self.write_reg(ICM42688_ACCEL_CONFIG0,[0x69]) # 2g + 50Hz
         #Enable FIFO
-        mode = 7 #FIFO_TEMP_EN + FIFO_GYRO_EN + FIFO_ACCEL_EN
-        self.write_reg(ICM42688_FIFO_CONFIG1, [mode])
-        start = 1<<6
-        self.write_reg(ICM42688_FIFO_CONFIG, [start])
-
+        self.write_reg(ICM42688_FIFO_CONFIG1, [0x07]) #FIFO_TEMP_EN + FIFO_GYRO_EN + FIFO_ACCEL_EN
+        self.write_reg(ICM42688_FIFO_CONFIG, [0x40]) #FIFO Enable
         self.write_reg(ICM42688_INTF_CONFIG1, [0x95]) # RTC_MODE
         self.write_reg(ICM42688_REG_BANK_SEL,[0x01])
-        self.write_reg(ICM42688_INTF_CONFIG5, [0x04]) # CLKIN
+        self.write_reg(ICM42688_INTF_CONFIG5, [0x04]) # CLKIN Enable
         self.write_reg(ICM42688_REG_BANK_SEL,[0x00])
         self.write_reg(ICM42688_TMST_CONFIG,[0x2B])
-
         self.write_reg(ICM42688_INT_CONFIG,[0x02]) # INT1 drive circuit = Push pull
         self.write_reg(ICM42688_INT_SOURCE0,[0x08]) # UI data ready interrupt routed to INT1
         self.write_reg(ICM42688_INT_CONFIG1,[0x00])
-
         self.start_measure()
     
     @micropython.native
@@ -197,46 +196,52 @@ class IMU:
     
     @micropython.native
     def readIMU_CSV(self):
+        self._spi = SPI(0, 24_000_000, sck=Pin(18), mosi=Pin(19), miso=Pin(16), polarity=0, phase=0)
         self._fpgacs_l()
         self.read_multi_reg(ICM42688_FIFO_DATA)
         self._fpgacs_h()
         self._fpgacs_l()
         self._spi.write(bytearray([FPGA_READ]))
+        #Because of the verilog code the data always shift at the postive edge
+        self._spi = SPI(0, 20_000_000, sck=Pin(18), mosi=Pin(19), miso=Pin(16), polarity=0, phase=1)
         self._spi.readinto(self.result)
         self._fpgacs_h()
         data = ustruct.unpack(">BhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBH", self.result)
         r = range(32)
         for no in r:
             header = data[0 + no * 9]
-            acc_x = data[1 + no * 9] * 0.061
-            acc_y = data[2 + no * 9] * 0.061
-            acc_z = data[3 + no * 9] * 0.061
-            gyro_x = data[4 + no * 9] * 31.25/65535.0
-            gyro_y = data[5 + no * 9] * 31.25/65535.0
-            gyro_z = data[6 + no * 9] * 31.25/65535.0
-            temp = data[7 + no * 9]/2.07 + 25
+            acc_x = data[1 + no * 9]
+            acc_y = data[2 + no * 9] 
+            acc_z = data[3 + no * 9] 
+            gyro_x = data[4 + no * 9]
+            gyro_y = data[5 + no * 9]
+            gyro_z = data[6 + no * 9]
+            temp = data[7 + no * 9]
             timestamp = data[8 + no * 9]
-            print("%d,%d,%d,%d,%d,%d,%d," % (acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z,temp))
-        print("\n\n\n\n",end="")
+            print("%d,%d,%d,%d,%d,%d,%d,%d,%d," % (header,timestamp,acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z,temp),end="")
+        print("\n",end="")
 
     @micropython.native
     def readIMU_average(self):
+        self._spi = SPI(0, 24_000_000, sck=Pin(18), mosi=Pin(19), miso=Pin(16), polarity=0, phase=0)
         self._fpgacs_l()
         self.read_multi_reg(ICM42688_FIFO_DATA)
         self._fpgacs_h()
         self._fpgacs_l()
         self._spi.write(bytearray([FPGA_READ]))
+        #Because of the verilog code the data always shift at the postive edge
+        self._spi = SPI(0, 20_000_000, sck=Pin(18), mosi=Pin(19), miso=Pin(16), polarity=0, phase=1)
         self._spi.readinto(self.result)
         self._fpgacs_h()
         data = ustruct.unpack(">BhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBHBhhhhhhBH", self.result)
         r = range(32)
-        acc_x = 0.0
-        acc_y = 0.0
-        acc_z = 0.0
-        gyro_x = 0.0
-        gyro_y = 0.0
-        gyro_z = 0.0
-        temp = 0.0
+        acc_x = 0
+        acc_y = 0
+        acc_z = 0
+        gyro_x = 0
+        gyro_y = 0
+        gyro_z = 0
+        temp = 0
         for no in r:
             if no < 8:
                 acc_x = acc_x + data[1 + no * 9]
@@ -269,7 +274,8 @@ class IMU:
             temp = temp + data[7 + no * 9]
         timestamp = data[8]
         header = data[0]
+        #If data is valid (i.e FIFO not underrun)
         if header == 104:
-            print("%d,%d,%d,%d,%d,%d,%d,%d" % (timestamp,acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z,temp))
+            print("%d,%d,%d,%d,%d,%d,%d,%d,%d" % (timestamp,header,acc_x,acc_y,acc_z,gyro_x,gyro_y,gyro_z,temp))
 
 
