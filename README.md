@@ -26,9 +26,9 @@ The code is still in its early stages so there isn't a lot of "Handy" functions 
 Most importantly, the code right now does not do any fancy data processing but only reading out 32x IMU data and either send all of them or do a simple average (accumulating only actually) and output the result (it does handle the 4 different rotations of the IMUs).  
 
 The project is still in developments, and here are the issues:  
-1. SPI clock is not stable higher then 5Mhz to the FPGA, work is on-going to move the data shifting posedge from ICE40 internal 48Mhz clock to use SCK directly.
+1. SPI clock is not stable higher then 5Mhz to the FPGA, work is on-going to move the data shifting posedge from ICE40 internal 48Mhz clock to use SCK directly.  
     UPDATE on 2024/08/04 - This has been resolved, now I can run the SPI at 20Mhz.
-2. Currently it is not possible to send out all IMU data at 200Hz, but only the averaged value. The bottleneck is in microPython code to print out the data to USB-CDC.
+2. Currently it is not possible to send out all IMU data at 200Hz, but only the averaged value. The bottleneck is in microPython code to print out the data to USB-CDC.  
    UPDATE on 2024/08/04 - Overclocked to 250Mhz so I can send out 100Hz x32 IMUs data to PC, so the focus now is the algorithm to filter out data.
 
 ## Footnotes
