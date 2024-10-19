@@ -4,7 +4,7 @@ Here is the board and code for the processing board I'm designing mainly for my 
 ![Board photo](/IMUArray_ProcessingBoard/Images/_DSC6747-2.jpg)
 
 ## System Block Diagram
-![System Block Diagram](/IMUArray_ProcessingBoard/Images/IMG_0009.JPG)
+![System Block Diagram](/IMUArray_ProcessingBoard/Images/IMG_0009.jpg)
 
 ## Dictionary Structure
 
