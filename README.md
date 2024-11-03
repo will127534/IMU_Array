@@ -15,9 +15,9 @@ Based on 32x ICM-42688-P and ICE40UP5K
 * FPGACode: Verilog files for the FPGA
 
 ## Notes
-The hardware is specifically designed for JLCPCB's 6-layer board + PCBA servicecs and as you can see from the photos it is using via-in-pad, though I still need to use smaller via dimensions (0.2mm drill) that drive up the cost from their promotional 2 USD PCB (JLCPCB, for anyone using your 6-layer adv. PCB the default 0.3mm/0.45mm is not enough and you should really think about moving to 0.2mm/0.35mm without additional cost for adv. PCB). Gerber, BOM and CPL files are also available.   
+The hardware is specifically designed for 6-layer board and as you can see from the photos it is using via-in-pad, though I still need to use smaller via dimensions (0.2mm drill). Gerber, BOM and CPL files are also available. Or you can order it from PCBWay [here](https://www.pcbway.com/project/shareproject/IMU_Array_Sensor_board_84cfc54a.html). (Thank you PCBWay for sponsering this project!)
 
-Without IMU and ICE40, two boards cost me about 67 USD (37 USD on PCB, 30 USD on PCBA), furthermore I have them populate top side only, the back side are some 0402 decoupling caps that can be easily hand soldered. Do note that the FPC connector is selected because it has the least width, but the plastic latch is way fragile then I though, so becareful.   
+You can have them populate top side only, the back side are some 0402 decoupling caps that can be easily hand soldered. Do note that the FPC connector is selected because it has the least width, but the plastic latch is way fragile then I though, so becareful.   
 
 As for the breakout board, it is really just for supporting the bring up process, I'm gonna design some other based boards to use this IMU array for my other projects (Geophone replacements).  
 
