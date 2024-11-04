@@ -7,6 +7,8 @@ Based on 32x ICM-42688-P and ICE40UP5K
 ## System Block Diagram
 ![BlockDiagram](Images/BlockDiagram.png)
 
+Blog post: [https://www.willwhang.dev/Project-IMU-Array/](https://www.willwhang.dev/Project-IMU-Array/)
+
 ## Dictionary Structure
 
 * IMUArray_SensorBoard: KiCad files for the Sensor board
@@ -47,20 +49,17 @@ Papers and Inspirations:
 ![image](https://image.itmedia.co.jp/mn/articles/2404/26/l_mn_embedded_24041202a.jpg)
 https://monoist.itmedia.co.jp/mn/articles/2404/26/news134.html
 
-2. H. Kamata, M. Kimishima, T. Sawada, Y. Suga, H. Takeda, K. Yamashita, and S. Mitani, MEMS Gyro Array Employing Array Signal Processing for Interference and Outlier Suppression, IEEE Inertial 2020, Hiroshima, Japan   
+2. Kamata, Hiroyuki et al. “MEMS Gyro Array Employing Array Signal Processing for Interference and Outlier Suppression.” 2020 IEEE International Symposium on Inertial Sensors and Systems (INERTIAL) (2020): 1-4. 
 https://ieeexplore.ieee.org/document/9090089   
 https://www.kenkai.jaxa.jp/research/innovation/multi_imu.html  
 https://www.sony.com/ja/SonyInfo/technology/stories/entries/Spresense/  
 This is also what Sony's IMU array board is based of I think.
 
-3. Purely Inertial Navigation with a Low-Cost MEMS Sensor Array by Lukas Blocher et. al  
+3. Blocher, Lukas et al. “Purely Inertial Navigation with a Low-Cost MEMS Sensor Array.” 2021 IEEE International Symposium on Inertial Sensors and Systems (INERTIAL) (2021): 1-4.
 https://ieeexplore.ieee.org/document/9430468
 
-4. Improving the Navigation Performance of the MEMS IMU Array by Precise Calibration - by Liqiang Wang et. al  
-https://ieeexplore.ieee.org/abstract/document/9562518
-
-5. Improving the Measurement Accuracy of the MEMS IMU Array by a New Calibration and Fusion Technology - by Tong Wang et. al  
+5. Wang, Liqiang et al. “Improving the Navigation Performance of the MEMS IMU Array by Precise Calibration.” IEEE Sensors Journal 21 (2021): 26050-26058.
 http://i2nav.com/ueditor/jsp/upload/file/20221125/1669361019644065348.pdf
 
-6. Aligning the Forces—Eliminating the Misalignments in IMU Arrays - by John-Olof Nilsson et. al  
+6. Nilsson, John-Olof et al. “Aligning the Forces—Eliminating the Misalignments in IMU Arrays.” IEEE Transactions on Instrumentation and Measurement 63 (2014): 2498-2500.
 https://ieeexplore.ieee.org/document/6879287
